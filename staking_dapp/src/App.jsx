@@ -17,6 +17,7 @@ function App() {
 
   const [name, setName] = useState(" ")
   const [symbol, setSymbol] = useState("")
+  const [decimals, setDecimal] = useState("")
 
   const rpcProvider = new RpcProvider({
     nodeUrl: "https://starknet-goerli.infura.io/v3/14d4909928f148238ba1da4db2886e77"
@@ -51,13 +52,17 @@ function App() {
       const readContract = new Contract(bwcAbi, contractAddress, rpcProvider)
       const name = await readContract.get_name()
       const symbol = await readContract.get_symbol()
+      const decimals = await readContract.get_decimal()
       setName(feltToString(name))
       setSymbol(feltToString(symbol))
+      setDecimal(feltToString(decimals))
     } catch (error) {
 
       alert(error.message)
     }
   }
+
+
 
   const connectWallet = async () => {
     const connection = await connect();
@@ -87,6 +92,7 @@ function App() {
 
       <h4 onLoad={getTokenName()}>{name}</h4>
       <p>{symbol}</p>
+      <p>{decimals}</p>
 
 
 
